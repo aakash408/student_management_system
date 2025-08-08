@@ -2,6 +2,8 @@ package com.studentapp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Student {
 
@@ -12,7 +14,7 @@ public class Student {
 
 	public Student(String name, int age, String studentId) {
 		super();
-		if (validateAge(age)) {
+		if (validateAge(age) && validateName(name) && validateStudentId(studentId)) {
 			this.name = name;
 			this.age = age;
 			this.studentId = studentId;
@@ -20,11 +22,11 @@ public class Student {
 		}
 	}
 
-	public void enrollCourse(String course) {
-		courses.add(course);
-		System.out.println("Student is enrolled to " + course + " sucessfully !!!");
-
-	}
+//	public void enrollCourse(String course) {
+//		courses.add(course);
+//		System.out.println("Student is enrolled to " + course + " sucessfully !!!");
+//
+//	}
 
 	@Override
 	public String toString() {
@@ -47,6 +49,71 @@ public class Student {
 			return true;
 		} else {
 			System.err.println("Invalid age !!! Student age needs to be between 19 to 35");
+			return false;
+		}
+
+	}
+
+	public boolean validateName(String name) {
+		String nameRegex = "^[a-zA-Z\\s]+$"; // Regex Pattern
+		Pattern namePattern = Pattern.compile(nameRegex);
+		Matcher nameMatcher = namePattern.matcher(name);
+		if (nameMatcher.matches()) {
+			return true;
+		} else {
+			System.err.println("Invalid Name !!! Please enter aphabets only");
+			return false;
+		}
+
+	}
+
+//	public boolean validateName(String name) {
+//		if (name == null) {
+//			System.err.println("Invalid Name !!! Name cannot be null");
+//			return false;
+//		}
+//
+//		String nameRegex = "^[a-zA-Z\\s]+$"; // Regex Pattern
+//		Pattern namePattern = Pattern.compile(nameRegex);
+//		Matcher nameMatcher = namePattern.matcher(name);
+//
+//		if (nameMatcher.matches()) {
+//			return true;
+//		} else {
+//			System.err.println("Invalid Name !!! Please enter alphabets only");
+//			return false;
+//		}
+//	}
+
+	public boolean validateStudentId(String studentId) {
+		String studentRegex = "S-\\d+$"; //
+		Pattern studentIdPattern = Pattern.compile(studentRegex);
+		Matcher studentIdMatcher = studentIdPattern.matcher(studentId);
+		if (studentIdMatcher.matches()) {
+			return true;
+		} else {
+			System.err.println("Invalid student ID ");
+		}
+		return false;
+
+	}
+
+	public void enrollCourse(String course) {
+		if (!courses.contains(course) && validateCourseName(course)) {
+			courses.add(course);
+			System.out.println("Student is enrolled to" + course + "sucessfully !!!");
+		} else {
+			System.err.println("Student is already enrolled to the Course " + course);
+		}
+
+	}
+
+	public boolean validateCourseName(String course) {
+		if (course.equalsIgnoreCase("Java") || course.equalsIgnoreCase("QA") || course.equalsIgnoreCase("AWS")) {
+			return true;
+
+		} else {
+			System.err.println("Invalid Course Name !! Please select Courses from the List !! [Java,QA,AWS]");
 			return false;
 		}
 
