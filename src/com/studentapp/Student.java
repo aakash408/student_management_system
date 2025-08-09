@@ -99,14 +99,16 @@ public class Student {
 	}
 
 	public void enrollCourse(String course) {
-		if (!courses.contains(course) && validateCourseName(course)) {
+		if( validateCourseName(course)) {
+		if (!courses.contains(course) ) {
 			courses.add(course);
-			System.out.println("Student is enrolled to" + course + "sucessfully !!!");
+			System.out.println("Student is enrolled to " + course + " sucessfully !!!");
 		} else {
 			System.err.println("Student is already enrolled to the Course " + course);
 		}
 
 	}
+}
 
 	public boolean validateCourseName(String course) {
 		if (course.equalsIgnoreCase("Java") || course.equalsIgnoreCase("QA") || course.equalsIgnoreCase("AWS")) {
